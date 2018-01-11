@@ -1,7 +1,7 @@
-import curses
-import math
 import contextlib
-
+import curses
+import itertools
+import math
 
 class Time:
   def __init__(self, seconds, elapsed_seconds):
@@ -70,8 +70,9 @@ class Session:
 
 
 class Pomodoro:
-  def __init__(self):
+  def __init__(self, sessions):
     self._tomato_count = 0
+    self._sessions = sessions
 
   def start(self):
     curses.wrapper(self._main)
@@ -82,19 +83,20 @@ class Pomodoro:
     curses.curs_set(0)
     self._init_color_pairs()
 
-    while True:
+    for i, minutes in enumerate(itertools.cycle(self._sessions)):
       try:
-        session = Session(window, 25, curses.color_pair(3),
-                          self._tomato_count)
-        session.start()
-        session.finish('Press any key to take a break.')
+        if i % 2 == 0:
+          session = Session(window, minutes, curses.color_pair(3),
+                            self._tomato_count)
+          session.start()
+          session.finish('Press any key to take a break.')
 
-        self._tomato_count += 1
-
-        break_time = Session(window, 5, curses.color_pair(5),
-                             self._tomato_count)
-        break_time.start()
-        break_time.finish('Press any key to start a new session.')
+          self._tomato_count += 1
+        else:
+          break_time = Session(window, minutes, curses.color_pair(5),
+                               self._tomato_count)
+          break_time.start()
+          break_time.finish('Press any key to start a new session.')
       except KeyboardInterrupt:
         break
 
