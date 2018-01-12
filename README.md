@@ -3,7 +3,6 @@
 ## Usage
 
 ```
-$ git clone https://github.com/quanon/pomodoro.py.git
-$ cd pomodoro.py
-$ bin/pomodoro
+$ pip install git+https://github.com/quanon/pomodoro.py
+$ pomodoro
 ```
