@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
   name='pomodoro',
-  version='0.0.1',
+  version='0.0.2',
   author='QUANON',
   author_email='quanon86@gmail.com',
   install_requires=[],

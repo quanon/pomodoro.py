@@ -2,6 +2,8 @@ import contextlib
 import curses
 import itertools
 import math
+from pomodoro import notification
+
 
 class Time:
   def __init__(self, seconds, elapsed_seconds):
@@ -89,6 +91,7 @@ class Pomodoro:
           session = Session(window, minutes, curses.color_pair(3),
                             self._tomato_count)
           session.start()
+          notification.notify('Session finished.')
           session.finish('Press any key to take a break.')
 
           self._tomato_count += 1
@@ -96,6 +99,7 @@ class Pomodoro:
           break_time = Session(window, minutes, curses.color_pair(5),
                                self._tomato_count)
           break_time.start()
+          notification.notify('Break time finished.')
           break_time.finish('Press any key to start a new session.')
       except KeyboardInterrupt:
         break
