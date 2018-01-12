@@ -70,9 +70,9 @@ class Session:
 
 
 class Pomodoro:
-  def __init__(self, sessions):
+  def __init__(self, cycle):
     self._tomato_count = 0
-    self._sessions = sessions
+    self._cycle = cycle
 
   def start(self):
     curses.wrapper(self._main)
@@ -83,7 +83,7 @@ class Pomodoro:
     curses.curs_set(0)
     self._init_color_pairs()
 
-    for i, minutes in enumerate(itertools.cycle(self._sessions)):
+    for i, minutes in enumerate(itertools.cycle(self._cycle)):
       try:
         if i % 2 == 0:
           session = Session(window, minutes, curses.color_pair(3),
